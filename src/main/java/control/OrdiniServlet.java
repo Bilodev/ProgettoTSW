@@ -1,4 +1,4 @@
-package DAO;
+package control;
 
 import DAO.OrdineRiepilogoDAO;
 import model.OrdineRiepilogo;

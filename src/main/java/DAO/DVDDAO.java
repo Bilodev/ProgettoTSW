@@ -34,7 +34,7 @@ public class DVDDAO {
     }
 
     public List<DVD> findAll() throws SQLException {
-        String sql = "SELECT * FROM DVD ORDER BY nome";
+        String sql = "SELECT * FROM DVD  WHERE inCatalogo=TRUE ORDER BY nome";
         List<DVD> results = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -120,4 +120,5 @@ public class DVDDAO {
                 resultSet.getBoolean("inCatalogo")
         );
     }
+    
 }

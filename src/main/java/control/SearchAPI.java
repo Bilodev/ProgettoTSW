@@ -29,7 +29,9 @@ public class SearchAPI extends HttpServlet {
         try {
             StringBuilder json = new StringBuilder("[");
             List<DVD> results = query != null && !query.isBlank() ? dvdDAO.searchByName(query) : List.of();
-            
+            if (query == null || query.isBlank()) {
+            	results = dvdDAO.findAll();
+            }
             for (int i = 0; i < results.size(); i++) {
                 DVD dvd = results.get(i);
                 if (i > 0) json.append(",");

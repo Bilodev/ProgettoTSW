@@ -9,10 +9,11 @@ import javax.servlet.http.HttpSession;
 
 import DAO.IndirizzoDAO;
 import DAO.OrdineDAO;
+import DAO.OrdineDVDDAO; // <--- Nuovo import necessario
 import model.DVDInCart;
 import model.Indirizzo;
 import model.Ordine;
-import model.Utente;
+import model.OrdineDVD;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,17 +26,15 @@ public class Checkout extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IndirizzoDAO indirizzoDAO = new IndirizzoDAO();
     private OrdineDAO ordineDAO = new OrdineDAO();
-
+    private OrdineDVDDAO ordineDVDDAO = new OrdineDVDDAO(); // <--- Istanza del nuovo DAO delle righe
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            HttpSession session = request.getSession(false);
-            request.setAttribute("session", session != null ? session : null);
-            request.getRequestDispatcher("/WEB-INF/view/Checkout.jsp").forward(request, response);
-        }
-    
+        HttpSession session = request.getSession(false);
+        request.setAttribute("session", session != null ? session : null);
+        request.getRequestDispatcher("/WEB-INF/view/Checkout.jsp").forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +44,8 @@ public class Checkout extends HttpServlet {
         String seqId = UUID.randomUUID().toString();
         int userId = (int) session.getAttribute("utenteId");
         
-        ArrayList<DVDInCart> cartList = session != null ? (ArrayList<DVDInCart>) session.getAttribute("cart") : new ArrayList<DVDInCart>();
+        @SuppressWarnings("unchecked")
+        ArrayList<DVDInCart> cartList = session != null ? (ArrayList<DVDInCart>) session.getAttribute("cart") : new ArrayList<>();
         
         String nome      = request.getParameter("nome");
         String cognome   = request.getParameter("cognome");
@@ -55,23 +55,49 @@ public class Checkout extends HttpServlet {
         String cap       = request.getParameter("cap");
 
         try {
-            // 1. Prima gli ordini (così seqId esiste in ORDINE)
-            if (cartList != null)
-        	for (DVDInCart dvd : cartList) {
-                ordineDAO.insert(new Ordine(0, seqId, userId, dvd.getId(), dvd.getPrezzo(), null, dvd.getQuantity()));
+            // 1. Inserimento della testata dell'ordine (Tabella ORDINE)
+            Ordine ordine = new Ordine();
+            ordine.setSeqId(seqId);
+            ordine.setUtenteId(userId);
+            // NOTA: Se il tuo model Ordine non ha un costruttore vuoto, usa quello a 4 parametri visto nel DAO:
+            // Ordine ordine = new Ordine(0, seqId, userId, null);
+
+            // Salva l'ordine e recupera l'ID autoincrementale generato dal DB
+            int ordineId = ordineDAO.insert(ordine);
+
+            // 2. Preparazione e inserimento in batch delle righe (Tabella ORDINE_DVD)
+            if (cartList != null && !cartList.isEmpty()) {
+                List<OrdineDVD> righeOrdine = new ArrayList<>();
+                
+                for (DVDInCart dvd : cartList) {
+                    OrdineDVD riga = new OrdineDVD();
+                    riga.setOrdineId(ordineId);
+                    riga.setDvdId(dvd.getId());
+                    riga.setQuantita(dvd.getQuantity());
+                    riga.setPrezzoUnitario((float) dvd.getPrezzo());
+                    // NOTA: Se il tuo model OrdineDVD usa il costruttore a 4 parametri visto nel DAO:
+                    // OrdineDVD riga = new OrdineDVD(ordineId, dvd.getId(), dvd.getQuantity(), (float) dvd.getPrezzo());
+                    
+                    righeOrdine.add(riga);
+                }
+                
+                // Esegue l'insert batch sul DB tramite il nuovo DAO
+                ordineDVDDAO.insertAll(righeOrdine);
             }
 
-            // 2. Poi l'indirizzo (foreign key su seqId ora soddisfatta)
+            // 3. Inserimento dell'indirizzo di spedizione legato al seqId dell'ordine
             indirizzoDAO.insert(new Indirizzo(0, seqId, userId, nome, cognome, indirizzo, citta, cap, paese));
-            if (cartList != null)
-            cartList.clear();
-            session.setAttribute("cart", cartList);
+            
+            // Svuota il carrello a transazione completata con successo
+            if (cartList != null) {
+                cartList.clear();
+                session.setAttribute("cart", cartList);
+            }
+            
             response.sendRedirect(request.getContextPath() + "/home");
 
         } catch (SQLException e) {
-            // Ora vedi l'errore reale
-            throw new ServletException("Errore DB nel checkout: " + e.getMessage(), e);
+            throw new ServletException("Errore DB durante la procedura di checkout: " + e.getMessage(), e);
         }
     }
-
 }

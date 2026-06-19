@@ -3,6 +3,7 @@ package model;
 import java.sql.Timestamp;
 
 public class OrdineRiepilogo {
+    private int ordineId; // <--- Nuova proprietà per la PK numerica di ORDINE
     private String seqId;
     private Timestamp dataOrdine;
     private float totale;
@@ -21,11 +22,12 @@ public class OrdineRiepilogo {
 
     public OrdineRiepilogo() {}
 
-    public OrdineRiepilogo(String seqId, Timestamp dataOrdine, float totale,
+    public OrdineRiepilogo(int ordineId, String seqId, Timestamp dataOrdine, float totale,
                            String nome, String cognome, String indirizzo,
                            String citta, String cap, String paese,
                            String dvdAcquistati, String username, String email, int utenteID) {
-    	this.utenteID = utenteID;
+        this.ordineId      = ordineId;
+        this.utenteID      = utenteID;
         this.seqId         = seqId;
         this.dataOrdine    = dataOrdine;
         this.totale        = totale;
@@ -40,17 +42,21 @@ public class OrdineRiepilogo {
         this.email         = email;
     }
 
+    // Getter e Setter per la nuova proprietà ordineId
+    public int getOrdineId() { return ordineId; }
+    public void setOrdineId(int ordineId) { this.ordineId = ordineId; }
+
     public String getSeqId()                    { return seqId; }
     public void setSeqId(String seqId)          { this.seqId = seqId; }
 
-    public Timestamp getDataOrdine()                    { return dataOrdine; }
-    public void setDataOrdine(Timestamp dataOrdine)     { this.dataOrdine = dataOrdine; }
+    public Timestamp getDataOrdine()            { return dataOrdine; }
+    public void setDataOrdine(Timestamp d)      { this.dataOrdine = d; }
 
-    public float getTotale()                { return totale; }
-    public void setTotale(float totale)     { this.totale = totale; }
+    public float getTotale()                    { return totale; }
+    public void setTotale(float totale)         { this.totale = totale; }
 
-    public String getNome()                 { return nome; }
-    public void setNome(String nome)        { this.nome = nome; }
+    public String getNome()                     { return nome; }
+    public void setNome(String nome)            { this.nome = nome; }
 
     public String getCognome()                  { return cognome; }
     public void setCognome(String cognome)      { this.cognome = cognome; }
@@ -82,10 +88,6 @@ public class OrdineRiepilogo {
     public float getTotaleSpeso()                   { return totaleSpeso; }
     public void setTotaleSpeso(float totaleSpeso)   { this.totaleSpeso = totaleSpeso; }
     
-    public int getUtenteID() {
-    	return utenteID;
-    }
-    public void setUtenteID(int u) {
-    	utenteID = u;
-    }
+    public int getUtenteID() { return utenteID; }
+    public void setUtenteID(int utenteID) { this.utenteID = utenteID; }
 }

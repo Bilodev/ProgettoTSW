@@ -1,9 +1,6 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -24,9 +21,7 @@ public class OrdineDAO {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                results.add(mapRow(resultSet));
-            }
+            while (resultSet.next()) results.add(mapRow(resultSet));
         }
         return results;
     }
@@ -36,10 +31,20 @@ public class OrdineDAO {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return mapRow(resultSet);
-                }
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        }
+        return null;
+    }
+
+    public Ordine findBySeqId(String seqId) throws SQLException {
+        String sql = "SELECT * FROM ORDINE WHERE seqId = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, seqId);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
             }
         }
         return null;
@@ -51,39 +56,26 @@ public class OrdineDAO {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, utenteId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    results.add(mapRow(resultSet));
-                }
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) results.add(mapRow(rs));
             }
         }
         return results;
     }
 
-    public void insert(Ordine ordine) throws SQLException {
-        String sql = "INSERT INTO ORDINE(seqId, utente_id, dvd_id, prezzo, quantita) VALUES (?, ?, ?, ?, ?)";
+    // Restituisce l'ID generato — serve subito dopo per inserire le righe in ORDINE_DVD
+    public int insert(Ordine ordine) throws SQLException {
+        String sql = "INSERT INTO ORDINE(seqId, utente_id) VALUES (?, ?)";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-        	statement.setString(1, ordine.getSeq());
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, ordine.getSeqId());
             statement.setInt(2, ordine.getUtenteId());
-            statement.setInt(3, ordine.getDvdId());
-            statement.setFloat(4, ordine.getPrezzo());
-            statement.setInt(5, ordine.getQuantita());
             statement.executeUpdate();
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
+            }
         }
-    }
-
-    public void update(Ordine ordine) throws SQLException {
-        String sql = "UPDATE ORDINE SET utente_id = ?, dvd_id = ?, prezzo = ?, quantita = ? WHERE id = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, ordine.getUtenteId());
-            statement.setInt(2, ordine.getDvdId());
-            statement.setFloat(3, ordine.getPrezzo());
-            statement.setInt(4, ordine.getQuantita());
-            statement.setInt(5, ordine.getId());
-            statement.executeUpdate();
-        }
+        throw new SQLException("Insert ORDINE fallita: nessun ID generato");
     }
 
     public void delete(int id) throws SQLException {
@@ -95,15 +87,12 @@ public class OrdineDAO {
         }
     }
 
-    private Ordine mapRow(ResultSet resultSet) throws SQLException {
+    private Ordine mapRow(ResultSet rs) throws SQLException {
         return new Ordine(
-                resultSet.getInt("id"),
-                resultSet.getString("seqId"),
-                resultSet.getInt("utente_id"),
-                resultSet.getInt("dvd_id"),
-                resultSet.getFloat("prezzo"),
-                resultSet.getTimestamp("data_ordine"),
-                resultSet.getInt("quantita")
+            rs.getInt("id"),
+            rs.getString("seqId"),
+            rs.getInt("utente_id"),
+            rs.getTimestamp("data_ordine")
         );
     }
 }
