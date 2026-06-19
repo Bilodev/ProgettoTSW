@@ -60,16 +60,23 @@ public class DVDDAO {
         return null;
     }
 
-    public void insert(DVD dvd) throws SQLException {
+    public int insert(DVD dvd) throws SQLException {
         String sql = "INSERT INTO DVD(nome, durata, regista, prezzo, inCatalogo) VALUES (?, ?, ?, ?, TRUE)";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, dvd.getNome());
             statement.setInt(2, dvd.getDurata());
-            statement.setString(3, dvd.getRegista());	
+            statement.setString(3, dvd.getRegista());
             statement.setFloat(4, dvd.getPrezzo());
             statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
         }
+        throw new SQLException("Insert fallita: nessun ID generato");
     }
 
     public void update(DVD dvd) throws SQLException {

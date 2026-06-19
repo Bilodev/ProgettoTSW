@@ -12,10 +12,9 @@
     <body>
         <% javax.servlet.http.HttpSession currentSession=(javax.servlet.http.HttpSession)
             request.getAttribute("session"); String nome=null; boolean isAdmin=false; if (currentSession !=null) {
-            Object nomeObj=currentSession.getAttribute("nome"); nome=nomeObj !=null ? nomeObj.toString() : null; Object
+            Object nomeObj=currentSession.getAttribute("username"); nome=nomeObj !=null ? nomeObj.toString() : null; Object
             adminObj=currentSession.getAttribute("admin"); isAdmin=Boolean.TRUE.equals(adminObj); } java.util.List<?>
-            results = (java.util.List
-            <?>) request.getAttribute("results");
+            results = (java.util.List<?>) request.getAttribute("results");
     String query = request.getParameter("q");
 %>
 <% if (currentSession != null && nome != null && !nome.isEmpty()) { %>

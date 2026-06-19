@@ -24,7 +24,6 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String identifier = request.getParameter("identifier");
         String password = request.getParameter("password");
-        String confirm = request.getParameter("confirm");
 
         if (identifier == null || identifier.isBlank() || password == null || password.isBlank()) {
             request.setAttribute("error", "Inserisci username/email e password");
@@ -41,7 +40,6 @@ public class Login extends HttpServlet {
             }
             HttpSession session = request.getSession(true);
             session.setAttribute("username", utente.getUsername());
-            session.setAttribute("nome", utente.getUsername());
             session.setAttribute("utenteId", utente.getId());
             session.setAttribute("admin", utente.isAdmin());
             response.sendRedirect(request.getContextPath() + "/home");

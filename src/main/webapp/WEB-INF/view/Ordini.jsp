@@ -17,7 +17,7 @@
 <div class="navbar">
     <div style="display: flex; gap: 8px; align-items: center;">
         <form action="<%= request.getContextPath() %>/home" method="get" style="display: inline;">
-            <button type="submit">Torna al catalogo</button>
+            <button type="submit">Torna alla home</button>
         </form>
     </div>
 </div>

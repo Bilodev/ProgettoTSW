@@ -1,39 +1,26 @@
 package control;
 
-import java.sql.SQLException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import DAO.ConnectionPool;
-
 public final class DataSourceFactory {
-    private static final DataSource DATA_SOURCE;
+    private static DataSource DATA_SOURCE;
 
     static {
-        DataSource dataSource = null;
         try {
+            // Effettua il JNDI lookup per ottenere il DataSource configurato in Tomcat
             Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            dataSource = (DataSource) envCtx.lookup("jdbc/dividdi");
-        } catch (NamingException ignored) {
-            // Fallback to environment variables when JNDI is not configured
+            DATA_SOURCE = (DataSource) envCtx.lookup("jdbc/dividdi");
+        } catch (NamingException e) {
+            System.err.println("Errore critico nel Lookup del DataSource: " + e.getMessage());
         }
-
-        if (dataSource == null) {
-            try {
-            	
-                dataSource = new ConnectionPool("jdbc:mysql://localhost:3306/dividdi", "anto", "anto");
-            } catch (SQLException e) {
-                throw new ExceptionInInitializerError("Unable to create connection pool: " + e.getMessage());
-            }
-        }
-
-        DATA_SOURCE = dataSource;
     }
 
     private DataSourceFactory() {
+        // Costruttore privato per evitare l'istanziazione
     }
 
     public static DataSource getDataSource() {

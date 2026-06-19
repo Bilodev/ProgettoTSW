@@ -24,6 +24,7 @@
     <table>
         <thead>
             <tr>
+            	<th>Copertina</th>
                 <th>Nome</th>
                 <th>Durata</th>
                 <th>Regista</th> 
@@ -35,6 +36,7 @@
         <tbody>
         <% for (int i = 0; i < cartList.size(); i++) { %>
             <tr>
+            	<td><img src="<%= request.getContextPath() %>/static/<%= cartList.get(i).getId()%>.jpg"></td>
                 <td><%= cartList.get(i).getNome() %></td>
                 <td><%= cartList.get(i).getDurata() %> min</td>
                 <td><%= cartList.get(i).getRegista() %></td>
@@ -47,7 +49,7 @@
 					<% } %>
 				</td>
                 
-                <td class="actions">
+                <td>
                     <button onclick="removeFromCart(<%= cartList.get(i).getId() %>)">Rimuovi</button>
                 </td>
             </tr>
@@ -56,7 +58,7 @@
     </table>
 <% } %>
 	<br> <br>
-	<% if (cartList != null && !cartList.isEmpty() && currentSession.getAttribute("nome") != null) { %>
+	<% if (cartList != null && !cartList.isEmpty() && currentSession.getAttribute("username") != null) { %>
 		
 	<% 
 	  float sum = 0;

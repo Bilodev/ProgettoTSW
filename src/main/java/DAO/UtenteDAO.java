@@ -1,5 +1,6 @@
 package DAO;
 
+import util.PasswordUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ public class UtenteDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, identifier);
             statement.setString(2, identifier);
-            statement.setString(3, password);
+            statement.setString(3, PasswordUtil.sha256(password));
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return new Utente(
@@ -62,7 +63,7 @@ public class UtenteDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, utente.getEmail());
             statement.setString(2, utente.getUsername());
-            statement.setString(3, utente.getPassword());
+            statement.setString(3, PasswordUtil.sha256(utente.getPassword()));
             statement.setBoolean(4, utente.isAdmin());
             statement.executeUpdate();
         }

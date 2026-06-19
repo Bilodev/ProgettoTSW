@@ -13,9 +13,9 @@
                 if (data.length === 0) {
                     resultsContainer.innerHTML = '<p>Nessun DVD trovato.</p>';
                 } else {
-                    let html = '<table><thead><tr><th>Nome</th><th>Durata</th><th>Regista</th><th>Prezzo</th><th>Azioni</th></tr></thead><tbody>';
+                    let html = '<table><thead><tr><th>Copertina</th><th>Nome</th><th>Durata</th><th>Regista</th><th>Prezzo</th><th>Azioni</th></tr></thead><tbody>';
                     data.forEach(dvd => {
-                        html += '<tr><td>' + dvd.nome + '</td><td>' + dvd.durata + ' min</td><td>' + dvd.regista + '</td>' + '<td>'+ dvd.prezzo +'€</td>'; 
+                        html += '<tr><td><img src="static/' + dvd.id +'.jpg"/></td><td>' + dvd.nome + '</td><td>' + dvd.durata + ' min</td><td>' + dvd.regista + '</td>' + '<td>'+ dvd.prezzo +'€</td>'; 
                         html += '<td><button onclick="addToCart(' + dvd.id + ', \'' + dvd.nome.replace(/'/g, "\\'") + '\', ' + dvd.durata + ', \'' + dvd.regista.replace(/'/g, "\\'") + '\', '+ dvd.prezzo + '\)">Aggiungi al carrello</button></td>';
                         html += '</tr>';
                     });

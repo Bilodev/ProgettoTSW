@@ -23,14 +23,12 @@
 </head>
 <body>
 
+<h1>Gestione ordini</h1>
+<br>
 <div class="navbar">
-    <h1>Gestione ordini</h1>
     <div style="display: flex; gap: 8px;">
         <form action="<%= request.getContextPath() %>/home" method="get" style="display: inline;">
-            <button type="submit">← Home</button>
-        </form>
-        <form action="<%= request.getContextPath() %>/logout" method="post" style="display: inline;">
-            <button type="submit">Logout</button>
+            <button type="submit">Home</button>
         </form>
     </div>
 </div>

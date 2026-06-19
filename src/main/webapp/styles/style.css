@@ -135,7 +135,7 @@ td {
 
 .navbar {
     margin-bottom: 20px;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;;
     padding-bottom: 10px;
     display: flex;
     align-items: center;
@@ -144,13 +144,13 @@ td {
 
 .filtri {
     display: flex;
-    gap: 8px;
-    align-items: flex-end;
-    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-end;   /* allinea tutto alla baseline bassa */
+    gap: 16px;
     margin-bottom: 20px;
     padding: 12px;
-    border: 1px solid #ccc;
     background: #fafafa;
+    flex-wrap: wrap;         /* va a capo su schermi stretti */
 }
 
 .filtri label {
@@ -172,4 +172,9 @@ td {
     width: auto;
     height: auto;
     line-height: 1;
+}
+
+img {
+	width: 60px;
+	height: auto;
 }

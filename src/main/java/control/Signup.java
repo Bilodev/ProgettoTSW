@@ -24,8 +24,6 @@ public class Signup extends HttpServlet {
         String email = request.getParameter("email");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String confirm = request.getParameter("confirm");
-
         try {
             if (utenteDAO.existsByUsername(username)) {
                 request.setAttribute("error", "Username già in uso");

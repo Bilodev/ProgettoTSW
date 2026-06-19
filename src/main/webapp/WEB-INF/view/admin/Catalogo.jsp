@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <title>Admin Catalogo</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
-
 </head>
 <body>
 <%
@@ -14,18 +13,18 @@
     model.DVD dvd = (model.DVD) request.getAttribute("dvd");
 %>
 <h1>Gestione Catalogo</h1>
-<p><a href="<%= request.getContextPath() %>/home">Torna alla home</a></p>
 
 <% if ("list".equals(mode)) { %>
     <form action="<%= request.getContextPath() %>/admin/catalogo" method="get">
         <input type="hidden" name="action" value="add" />
         <button type="submit">Aggiungi nuovo DVD</button>
     </form>
-
-    <h2>Elenco DVD</h2>
+        <p><a href="<%= request.getContextPath() %>/home">Torna alla home</a></p>
+	<br>
     <table>
         <thead>
             <tr>
+                <th>Immagine</th>
                 <th>Nome</th>
                 <th>Durata</th>
                 <th>Regista</th>
@@ -39,65 +38,96 @@
                 model.DVD current = (model.DVD) item;
         %>
             <tr>
+                <td>
+                    <img src="<%= request.getContextPath() %>/static/<%= current.getId() %>.jpg"
+                         alt="<%= current.getNome() %>"
+                         width="60"
+                         onerror="this.style.display='none'"/>
+                </td>
                 <td><%= current.getNome() %></td>
                 <td><%= current.getDurata() %> min</td>
                 <td><%= current.getRegista() %></td>
                 <td><%= current.getPrezzo() %>€</td>
-                
-                <td class="actions">
+                <td>
                     <form action="<%= request.getContextPath() %>/admin/catalogo" method="get" style="display:inline;">
                         <input type="hidden" name="action" value="edit" />
                         <input type="hidden" name="id" value="<%= current.getId() %>" />
                         <button type="submit">Modifica</button>
                     </form>
-                   <% if (current.isInCatalogo()) { %> 	
+                    <% if (current.isInCatalogo()) { %>
                     <form action="<%= request.getContextPath() %>/admin/catalogo" method="post" style="display:inline;">
                         <input type="hidden" name="action" value="delete" />
                         <input type="hidden" name="id" value="<%= current.getId() %>" />
                         <button type="submit">Elimina</button>
                     </form>
-					<% } else { %> 
-					<form action="<%= request.getContextPath() %>/admin/catalogo" method="post" style="display:inline;">
+                    <% } else { %>
+                    <form action="<%= request.getContextPath() %>/admin/catalogo" method="post" style="display:inline;">
                         <input type="hidden" name="action" value="reinsert" />
                         <input type="hidden" name="id" value="<%= current.getId() %>" />
-                        <button type="submit">Riaggungi</button>
+                        <button type="submit">Riaggiungi</button>
                     </form>
-	               <% } %> 
+                    <% } %>
                 </td>
             </tr>
         <%  }
         } else { %>
-            <tr><td colspan="4">Nessun DVD presente.</td></tr>
+            <tr><td colspan="6">Nessun DVD presente.</td></tr>
+            <br>
         <% } %>
         </tbody>
     </table>
 
 <% } else if ("add".equals(mode) || "edit".equals(mode)) { %>
     <h2><%= "add".equals(mode) ? "Aggiungi DVD" : "Modifica DVD" %></h2>
-    <form action="<%= request.getContextPath() %>/admin/catalogo" method="post">
+
+    <%-- enctype multipart/form-data obbligatorio per l'upload del file --%>
+    <form action="<%= request.getContextPath() %>/admin/catalogo"
+          method="post"
+          enctype="multipart/form-data">
+
         <input type="hidden" name="action" value="<%= "add".equals(mode) ? "create" : "update" %>" />
         <% if ("edit".equals(mode) && dvd != null) { %>
             <input type="hidden" name="id" value="<%= dvd.getId() %>" />
         <% } %>
+
         <div>
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<%= dvd != null ? dvd.getNome() : "" %>" required />
+            <input type="text" id="nome" name="nome"
+                   value="<%= dvd != null ? dvd.getNome() : "" %>" required />
         </div>
         <div>
             <label for="durata">Durata (min):</label>
-            <input type="number" id="durata" name="durata" value="<%= dvd != null ? dvd.getDurata() : "" %>" required />
+            <input type="number" id="durata" name="durata"
+                   value="<%= dvd != null ? dvd.getDurata() : "" %>" required />
         </div>
         <div>
             <label for="regista">Regista:</label>
-            <input type="text" id="regista" name="regista" value="<%= dvd != null ? dvd.getRegista() : "" %>" required />
+            <input type="text" id="regista" name="regista"
+                   value="<%= dvd != null ? dvd.getRegista() : "" %>" required />
         </div>
         <div>
-        	<label for="prezzo">Prezzo (€):</label>
-            <input type="number" id="prezzo"  step="0.01" name="prezzo" value="<%= dvd != null ? dvd.getPrezzo() : "" %>" required />
+            <label for="prezzo">Prezzo (€):</label>
+            <input type="number" id="prezzo" step="0.01" name="prezzo"
+                   value="<%= dvd != null ? dvd.getPrezzo() : "" %>" required />
         </div>
+        <div>
+            <label for="immagine">Immagine:</label>
+            <% if ("edit".equals(mode) && dvd != null) { %>
+                <%-- Mostra l'immagine corrente se presente --%>
+                <img src="<%= request.getContextPath() %>/static/img/dvd/<%= dvd.getId() %>.jpg"
+                     alt="Immagine attuale"
+                     width="80"
+                     style="display:block; margin-bottom:6px;"
+                     onerror="this.style.display='none'" />
+                <small>Carica una nuova immagine solo se vuoi sostituire quella attuale.</small><br/>
+            <% } %>
+            <input type="file" id="immagine" name="immagine" accept="image/*" />
+        </div>
+
         <button type="submit"><%= "add".equals(mode) ? "Crea" : "Aggiorna" %></button>
         <a href="<%= request.getContextPath() %>/admin/catalogo?action=list">Annulla</a>
     </form>
+
 <% } else { %>
     <p>Modalità non valida.</p>
 <% } %>

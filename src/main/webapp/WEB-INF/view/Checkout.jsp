@@ -92,7 +92,7 @@
 
 </form>
 
-<script src="${pageContext.request.contextPath}/scripts/home.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/checkout.js"></script>
 
 </body>
 </html>
