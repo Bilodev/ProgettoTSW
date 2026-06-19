@@ -1,0 +1,175 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f9fafb;
+  padding: 3rem 2rem;
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+}
+
+label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+input {
+    padding: 0.6rem 0.85rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    width: 320px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+input:focus {
+    border-color: #4f6ef7;
+}
+
+input::placeholder {
+    color: #adb5bd;
+}
+
+button{
+    padding: 0.65rem 1.75rem;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.70rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+button[type="submit"] {
+    margin-top: 0.5rem;
+    padding: 0.65rem 1.75rem;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    width: auto ;
+}
+
+button, button[type="submit"]:hover {
+    background: #333;
+}
+
+p {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+p a {
+    color: #4f6ef7;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: #c0392b;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.invalid {
+    border: 2px solid red;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    width: auto;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+
+
+.navbar {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filtri {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    background: #fafafa;
+}
+
+.filtri label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.qtbutton {
+    margin-top: -2px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.85rem;
+    width: auto;
+    height: auto;
+    line-height: 1;
+}

@@ -17,33 +17,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin — Ordini</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ccc; padding: 8px; }
-        th { background: #f5f5f3; }
-        .navbar {
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .filtri {
-            display: flex;
-            gap: 8px;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            background: #fafafa;
-        }
-        .filtri label { display: block; font-size: 12px; margin-bottom: 4px; }
-        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-        .totale { font-weight: bold; }
-        .error { color: red; }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
+
+
 </head>
 <body>
 

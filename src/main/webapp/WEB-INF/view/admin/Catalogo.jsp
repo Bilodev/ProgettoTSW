@@ -4,11 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Catalogo</title>
-<style>
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 8px; }
-    .actions { display: flex; gap: 8px; }
-</style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
+
 </head>
 <body>
 <%

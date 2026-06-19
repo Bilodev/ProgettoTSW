@@ -4,10 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<style>
-    .error { color: red; }
-    .invalid { border-color: red; }
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
 </head>
 <body>
 <h1>Login</h1>
@@ -23,43 +20,11 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" placeholder="minimo 6 caratteri" required>
     </div>
+    <center>
     <button type="submit">Accedi</button>
+    </center>
 </form>
 <p>Non hai un account? <a href="<%= request.getContextPath() %>/signup">Registrati</a></p>
-<script>
-const form = document.querySelector('form');
-const identifierInput = document.getElementById('identifier');
-const passwordInput = document.getElementById('password');
-
-const validateField = (field) => {
-    field.classList.remove('invalid');
-    if (!field.checkValidity()) {
-        field.classList.add('invalid');
-    }
-};
-
-identifierInput.addEventListener('change', function() {
-    validateField(this);
-});
-
-passwordInput.addEventListener('change', function() {
-    validateField(this);
-});
-
-form.addEventListener('submit', function (event) {
-    let valid = true;
-    const fields = Array.from(form.querySelectorAll('[required]'));
-    fields.forEach(field => {
-        field.classList.remove('invalid');
-        if (!field.checkValidity()) {
-            field.classList.add('invalid');
-            valid = false;
-        }
-    });
-    if (!valid) {
-        event.preventDefault();
-    }
-});
-</script>
+<script src="${pageContext.request.contextPath}/scripts/login.js"></script>
 </body>
 </html>

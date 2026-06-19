@@ -1,15 +1,12 @@
+<%@page import="java.math.RoundingMode"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Carrello</title>
-<style>
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    .actions { display: flex; gap: 8px; }
-    button { padding: 5px 10px; cursor: pointer; }
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
 </head>
 <body>
 <%@ page import="java.util.ArrayList" %>
@@ -20,7 +17,7 @@
 %>
 <h1>Il Mio Carrello</h1>
 <p><a href="<%= request.getContextPath() %>/home">Torna alla home</a></p>
-
+<br> <br>
 <% if (cartList == null || cartList.isEmpty()) { %>
     <p>Il carrello è vuoto.</p>
 <% } else { %>
@@ -44,9 +41,9 @@
                 <td><%= cartList.get(i).getPrezzo() %>€</td>
 				<td>
 					<%= cartList.get(i).getQuantity() %> 
-					<button onclick="updateCart(<%= cartList.get(i).getId() %>, 1 )">+</button> 
+					<button class="qtbutton" onclick="updateCart(<%= cartList.get(i).getId() %>, 1 )">+</button> 
 					<% if (cartList.get(i).getQuantity() >= 2){ %>
-						<button onclick="updateCart(<%= cartList.get(i).getId() %>, -1 )">-</button> 
+						<button class="qtbutton" onclick="updateCart(<%= cartList.get(i).getId() %>, -1 )">-</button> 
 					<% } %>
 				</td>
                 
@@ -61,71 +58,29 @@
 	<br> <br>
 	<% if (cartList != null && !cartList.isEmpty() && currentSession.getAttribute("nome") != null) { %>
 		
-		<% float sum = 0; for (int i = 0; i < cartList.size(); i++) sum += cartList.get(i).getPrezzo() * cartList.get(i).getQuantity(); %>
-		<form action="<%= request.getContextPath() %>/checkout" method="get" style="display: inline;">
-            <button type="submit">Checkout <%= sum %>€</button>
-        </form>
-		
+	<% 
+	  float sum = 0;
+	  for (int i = 0; i < cartList.size(); i++)
+	      sum += cartList.get(i).getPrezzo() * cartList.get(i).getQuantity();
+	  DecimalFormat df = new DecimalFormat("#.##");
+	  df.setRoundingMode(RoundingMode.CEILING);
+	%>
+	<form action="<%= request.getContextPath() %>/checkout" method="get" style="display: inline;">
+	    <button type="submit">Checkout <%= df.format(sum) %> €</button>
+	</form>
 	<%  } else if (cartList != null && !cartList.isEmpty())  {	%>
 		<form action="<%= request.getContextPath() %>/login" method="get" style="display: inline;">
             <button type="submit">LogIn per acquistare</button>
         </form>
 	<% } %>
+	<br>
 	<% if (cartList != null && !cartList.isEmpty()) {%>
 	<button onclick="svuotaCarrello()">Svuota Carrello</button>
 	<% } %>
 </body>
 <script>
-
-function svuotaCarrello(){
-    fetch('<%= request.getContextPath() %>/cart', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'action=emptyCart'
-        })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    })
-    .catch(error => console.error('Errore:', error))
-}
-
-function removeFromCart(id) {
-    fetch('<%= request.getContextPath() %>/cart', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'action=remove&id=' + id
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    })
-    .catch(error => console.error('Errore:', error));
-}
-
-function updateCart(id, value) {
-    fetch('<%= request.getContextPath() %>/cart', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'action=updateQuantity&id=' + id + "&qt=" + value
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    })
-    .catch(error => console.error('Errore:', error));
-}
+	const URL = "<%= request.getContextPath() %>/cart"
 </script>
+<script src="${pageContext.request.contextPath}/scripts/cart.js"></script>
+
 </html>

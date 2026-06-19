@@ -9,34 +9,15 @@
 <head>
     <meta charset="UTF-8">
     <title>I miei ordini</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-        .error { color: red; }
-        .navbar {
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 10px;
-        }
-        .totale { font-weight: bold; }
-    </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
 </head>
 <body>
 
+<h1>I miei ordini</h1>
 <div class="navbar">
-    <h1>I miei ordini</h1>
     <div style="display: flex; gap: 8px; align-items: center;">
         <form action="<%= request.getContextPath() %>/home" method="get" style="display: inline;">
-            <button type="submit">← Torna al catalogo</button>
-        </form>
-        <form action="<%= request.getContextPath() %>/logout" method="post" style="display: inline;">
-            <button type="submit">Logout</button>
+            <button type="submit">Torna al catalogo</button>
         </form>
     </div>
 </div>

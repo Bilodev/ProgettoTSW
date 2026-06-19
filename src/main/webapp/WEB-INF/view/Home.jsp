@@ -3,24 +3,10 @@
     <html>
 
     <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
+    
         <meta charset="UTF-8">
         <title>Home</title>
-        <style>
-            table {
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-            th,
-            td {
-                border: 1px solid #ccc;
-                padding: 8px;
-            }
-
-            .error {
-                color: red;
-            }
-        </style>
     </head>
 
     <body>
@@ -32,9 +18,9 @@
             <?>) request.getAttribute("results");
     String query = request.getParameter("q");
 %>
-<div class="navbar" style="margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">
 <% if (currentSession != null && nome != null && !nome.isEmpty()) { %>
-    <h1>Benvenuto <%= nome %></h1>
+<h1>Benvenuto <%= nome %></h1>
+<div class="navbar" style="margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">
     <div class="buttons" style="display: flex; gap: 8px; align-items: center;">
         <% if (isAdmin) { %>
             <form action="<%= request.getContextPath() %>/admin/catalogo" method="get" style="display: inline;">
@@ -59,11 +45,12 @@
         <button type="submit">Login</button>
     </form>
 <% } %>
+	<br>
+</div>
         <form action="<%= request.getContextPath() %>/cart" method="get" style="display: inline;">
             <button type="submit">🛒 Carrello</button>
         </form>
-</div>
-
+	<br> <br>
 <div>
     <label for="q">Cerca DVD:</label>
     <input type="text" id="q" placeholder="Digita il nome del film...">
@@ -71,70 +58,14 @@
 </div>
 
 <div id="resultsContainer" style="margin-top: 20px;"></div>
+<script lang="js">
+const searchInput = document.getElementById('q');
+const resultsContainer = document.getElementById('resultsContainer');
+const messageDiv = document.getElementById('message');
+const contextPath = '<%= request.getContextPath() %>';	
+</script>
+<script src="${pageContext.request.contextPath}/scripts/home.js">
 
-<script>
-    const searchInput = document.getElementById('q');
-    const resultsContainer = document.getElementById('resultsContainer');
-    const messageDiv = document.getElementById('message');
-    const contextPath = '<%= request.getContextPath() %>';
-    const isLoggedIn = <%= currentSession != null && nome != null && !nome.isEmpty() %>;
-
-    searchInput.addEventListener('input', function () {
-        const query = this.value.trim();
-        messageDiv.textContent = '';
-
-        if (query.length === 0) {
-            resultsContainer.innerHTML = '';
-            return;
-        }
-
-        fetch(contextPath + '/api/search?q=' + encodeURIComponent(query))
-            .then(response => response.json())
-            .then(data => {
-                if (data.length === 0) {
-                    resultsContainer.innerHTML = '<p>Nessun DVD trovato.</p>';
-                } else {
-                    let html = '<h2>Risultati ricerca</h2><table><thead><tr><th>Nome</th><th>Durata</th><th>Regista</th><th>Prezzo</th><th>Azioni</th></tr></thead><tbody>';
-                    data.forEach(dvd => {
-                        html += '<tr><td>' + dvd.nome + '</td><td>' + dvd.durata + ' min</td><td>' + dvd.regista + '</td>' + '<td>'+ dvd.prezzo +'€</td>'; 
-                        html += '<td><button onclick="addToCart(' + dvd.id + ', \'' + dvd.nome.replace(/'/g, "\\'") + '\', ' + dvd.durata + ', \'' + dvd.regista.replace(/'/g, "\\'") + '\', '+ dvd.prezzo + '\)">Aggiungi al carrello</button></td>';
-                        html += '</tr>';
-                    });
-                    html += '</tbody></table>';
-                    
-                    resultsContainer.innerHTML = html;
-                }
-            })
-            .catch(error => {
-                console.error('Errore:', error);
-                resultsContainer.innerHTML = '<p style="color: red;">Errore nella ricerca.</p>';
-            });
-    });
-
-    function addToCart(id, nome, durata, regista, prezzo) {
-        fetch(contextPath + '/cart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'action=add&id=' + id + '&nome=' + encodeURIComponent(nome) + '&durata=' + durata + '&regista=' + encodeURIComponent(regista) + '&prezzo=' + prezzo	
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    messageDiv.textContent = '✓ "' + nome + '" aggiunto al carrello';
-                    messageDiv.style.color = 'green';
-                    setTimeout(() => {
-                        messageDiv.textContent = '';
-                    }, 3000);
-                }
-            })
-            .catch(error => {
-                console.error('Errore:', error);
-                messageDiv.textContent = 'Errore nell\'aggiungere al carrello';
-                messageDiv.style.color = 'red';
-            });
-    }
 </script>
 </body>
 </html>
