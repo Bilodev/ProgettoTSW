@@ -3,6 +3,8 @@
     javax.servlet.http.HttpSession currentSession = request.getSession(false);
     java.util.List<model.OrdineRiepilogo> ordini =
         (java.util.List<model.OrdineRiepilogo>) request.getAttribute("ordini");
+    boolean isAdmin=false; 
+    Object adminObj=currentSession.getAttribute("admin"); isAdmin=Boolean.TRUE.equals(adminObj); 
 %>
 <!DOCTYPE html>
 <html>
@@ -12,14 +14,18 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
 </head>
 <body>
-
-<h1>I miei ordini</h1>
 <div class="navbar">
-    <div style="display: flex; gap: 8px; align-items: center;">
-        <form action="<%= request.getContextPath() %>/home" method="get" style="display: inline;">
-            <button type="submit">Torna alla home</button>
-        </form>
-    </div>
+        <span class="navbar-brand">I miei ordini</span>
+        <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
+        <div class="navbar-links" id="navbarLinks">
+            <a href="<%= request.getContextPath() %>/home">Home</a>
+            <% if (isAdmin) { %>
+                <a href="<%= request.getContextPath() %>/admin/catalogo">Gestione Catalogo</a>
+                <a href="<%= request.getContextPath() %>/admin/ordini">Gestisci ordini</a>
+            <% } %>
+            <a href="<%= request.getContextPath() %>/cart">Carrello</a>
+            <a href="<%= request.getContextPath() %>/logout">Logout</a>
+        </div>
 </div>
 
 <% if (ordini == null || ordini.isEmpty()) { %>
@@ -53,4 +59,6 @@
 <% } %>
 
 </body>
+<script src="${pageContext.request.contextPath}/scripts/hamburger.js"></script>
+
 </html>

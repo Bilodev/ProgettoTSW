@@ -14,9 +14,36 @@
 <%
     javax.servlet.http.HttpSession currentSession = request.getSession(false);
     ArrayList<DVDInCart> cartList = currentSession != null ? (ArrayList<DVDInCart>) currentSession.getAttribute("cart") : new ArrayList<DVDInCart>();
+    String nome=null;
+    if (currentSession !=null) { Object nomeObj=currentSession.getAttribute("username"); nome=nomeObj !=null ? nomeObj.toString() : null; }
+    	
+    
+    boolean isAdmin=false; 
+    Object adminObj=currentSession.getAttribute("admin"); isAdmin=Boolean.TRUE.equals(adminObj);
 %>
-<h1>Il Mio Carrello</h1>
-<p><a href="<%= request.getContextPath() %>/home">Torna alla home</a></p>
+
+<div class="navbar">
+    <% if (currentSession != null && nome != null && !nome.isEmpty()) { %>
+        <span class="navbar-brand">Carrello</span>
+        <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
+        <div class="navbar-links" id="navbarLinks">
+            <a href="<%= request.getContextPath() %>/cart">Home</a>
+            <% if (isAdmin) { %>
+                <a href="<%= request.getContextPath() %>/admin/catalogo">Gestione Catalogo</a>
+                <a href="<%= request.getContextPath() %>/admin/ordini">Gestisci ordini</a>
+            <% } %>
+            <a href="<%= request.getContextPath() %>/ordini">I miei Ordini</a>
+            <a href="<%= request.getContextPath() %>/logout">Logout</a>
+        </div>
+    <% } else { %>
+        <span class="navbar-brand">Benvenuto</span>
+        <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
+        <div class="navbar-links" id="navbarLinks">
+        	<a href="<%= request.getContextPath() %>/cart">Home</a>
+            <a href="<%= request.getContextPath() %>/login">Login</a>
+        </div>
+    <% } %>
+</div>
 <br> <br>
 <% if (cartList == null || cartList.isEmpty()) { %>
     <p>Il carrello è vuoto.</p>
@@ -84,5 +111,6 @@
 	const URL = "<%= request.getContextPath() %>/cart"
 </script>
 <script src="${pageContext.request.contextPath}/scripts/cart.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/hamburger.js"></script>
 
 </html>

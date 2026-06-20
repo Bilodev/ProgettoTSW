@@ -17,44 +17,31 @@
             results = (java.util.List<?>) request.getAttribute("results");
     String query = request.getParameter("q");
 %>
-<% if (currentSession != null && nome != null && !nome.isEmpty()) { %>
-<h1>Benvenuto <%= nome %></h1>
-<div class="navbar" style="margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">
-    <div class="buttons" style="display: flex; gap: 8px; align-items: center;">
-        <% if (isAdmin) { %>
-            <form action="<%= request.getContextPath() %>/admin/catalogo" method="get" style="display: inline;">
-                <button type="submit">Gestione Catalogo</button>
-            </form>
-			<form action="<%= request.getContextPath() %>/admin/ordini" method="get" style="display: inline;">
-                <button type="submit">Gestisci ordini utenti</button>
-            </form>
-            
-        <% } %>
-        <form action="<%= request.getContextPath() %>/logout" method="post" style="display: inline;">
-            <button type="submit">Logout</button>
-        </form>
-        
-        <form action="<%= request.getContextPath() %>/ordini" method="get" style="display: inline;">
-            <button type="submit">I miei Ordini</button>
-        </form>
-    </div>
-<% } else { %>
-    <h1>Benvenuto</h1>
-    <form action="<%= request.getContextPath() %>/login" method="get">
-        <button type="submit">Login</button>
-    </form>
-<% } %>
-	<br>
+<div class="navbar">
+    <% if (currentSession != null && nome != null && !nome.isEmpty()) { %>
+        <span class="navbar-brand">Benvenuto <%= nome %></span>
+        <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
+        <div class="navbar-links" id="navbarLinks">
+            <% if (isAdmin) { %>
+                <a href="<%= request.getContextPath() %>/admin/catalogo">Gestione Catalogo</a>
+                <a href="<%= request.getContextPath() %>/admin/ordini">Gestisci ordini</a>
+            <% } %>
+            <a href="<%= request.getContextPath() %>/ordini">I miei Ordini</a>
+            <a href="<%= request.getContextPath() %>/cart">Carrello</a>
+            <a href="<%= request.getContextPath() %>/logout">Logout</a>
+        </div>
+    <% } else { %>
+        <span class="navbar-brand">Benvenuto</span>
+        <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
+        <div class="navbar-links" id="navbarLinks">
+        	<a href="<%= request.getContextPath() %>/cart">Carrello</a>
+            <a href="<%= request.getContextPath() %>/login">Login</a>
+        </div>
+    <% } %>
 </div>
-        <form action="<%= request.getContextPath() %>/cart" method="get" style="display: inline;">
-            <button type="submit">🛒 Carrello</button>
-        </form>
-	<br> <br>
-<div>
-    <label for="q">Cerca DVD:</label>
+	<br> <br> <br>
     <input type="text" id="q" placeholder="Digita il nome del film...">
     <div id="message" style="margin-top: 10px;"></div>
-</div>
 
 <div id="resultsContainer" style="margin-top: 20px;"></div>
 <script lang="js">
@@ -63,8 +50,8 @@ const resultsContainer = document.getElementById('resultsContainer');
 const messageDiv = document.getElementById('message');
 const contextPath = '<%= request.getContextPath() %>';	
 </script>
-<script src="${pageContext.request.contextPath}/scripts/home.js">
+<script src="${pageContext.request.contextPath}/scripts/home.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/hamburger.js"></script>
 
-</script>
 </body>
 </html>

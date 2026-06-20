@@ -11,15 +11,30 @@
     String mode = (String) request.getAttribute("mode");
     java.util.List<?> dvds = (java.util.List<?>) request.getAttribute("dvds");
     model.DVD dvd = (model.DVD) request.getAttribute("dvd");
+    javax.servlet.http.HttpSession currentSession = request.getSession(false);
+    boolean isAdmin=false; 
+    Object adminObj=currentSession.getAttribute("admin"); isAdmin=Boolean.TRUE.equals(adminObj);
 %>
-<h1>Gestione Catalogo</h1>
+
+<div class="navbar">
+        <span class="navbar-brand">Gestione Catalogo</span>
+        <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
+        <div class="navbar-links" id="navbarLinks">
+              <a href="<%= request.getContextPath() %>/home">Home</a>
+         
+              <a href="<%= request.getContextPath() %>/admin/ordini">Gestisci ordini</a>
+   
+            <a href="<%= request.getContextPath() %>/ordini">I miei Ordini</a>
+            <a href="<%= request.getContextPath() %>/cart">Carrello</a>
+            <a href="<%= request.getContextPath() %>/logout">Logout</a>
+        </div>
+</div>
 
 <% if ("list".equals(mode)) { %>
     <form action="<%= request.getContextPath() %>/admin/catalogo" method="get">
         <input type="hidden" name="action" value="add" />
         <button type="submit">Aggiungi nuovo DVD</button>
     </form>
-        <p><a href="<%= request.getContextPath() %>/home">Torna alla home</a></p>
 	<br>
     <table>
         <thead>
@@ -132,4 +147,5 @@
     <p>Modalità non valida.</p>
 <% } %>
 </body>
+<script src="${pageContext.request.contextPath}/scripts/hamburger.js"></script>
 </html>

@@ -23,14 +23,16 @@
 </head>
 <body>
 
-<h1>Gestione ordini</h1>
-<br>
 <div class="navbar">
-    <div style="display: flex; gap: 8px;">
-        <form action="<%= request.getContextPath() %>/home" method="get" style="display: inline;">
-            <button type="submit">Home</button>
-        </form>
-    </div>
+        <span class="navbar-brand">Gestione Ordini</span>
+        <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
+        <div class="navbar-links" id="navbarLinks">
+            <a href="<%= request.getContextPath() %>/home">Home</a>
+            <a href="<%= request.getContextPath() %>/admin/catalogo">Gestione Catalogo</a>
+            <a href="<%= request.getContextPath() %>/ordini">I miei Ordini</a>
+            <a href="<%= request.getContextPath() %>/cart">Carrello</a>
+            <a href="<%= request.getContextPath() %>/logout">Logout</a>
+        </div>
 </div>
 
 <%-- Tab vista --%>
@@ -146,4 +148,5 @@
 <% } %>
 
 </body>
+<script src="${pageContext.request.contextPath}/scripts/hamburger.js"></script>
 </html>

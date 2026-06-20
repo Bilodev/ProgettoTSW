@@ -9,12 +9,16 @@
 body {
   font-family: 'Arial', sans-serif;
   background: #f9fafb;
-  padding: 3rem 2rem;
+  padding: 0;
   color: #1a1a1a;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+}
+
+.navbar + * {
+    margin-top: 2rem;
 }
 
 h1 {
@@ -134,12 +138,108 @@ td {
 
 
 .navbar {
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ccc;;
-    padding-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 1.6rem 1.5rem;
+    margin-bottom: 24px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-right: 20px;
+}
+
+.navbar-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: bolder;
+    transition: color 0.15s;
+}
+
+.navbar-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.navbar-logout {
+    background: transparent !important;
+    color: #e0e0e0 !important;
+    border: none !important;
+    padding: 0 !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.navbar-logout:hover {
+    color: #fff !important;
+    text-decoration: underline;
+    background: transparent !important;
+}
+
+/* Hamburger button - nascosto su desktop */
+.navbar-hamburger {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+/* Responsive: sotto 800px */
+@media (max-width: 800px) {
+    .navbar {
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
+    }
+
+    .navbar-hamburger {
+        display: block;
+    }
+
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #333;
+    }
+
+    .navbar-links.open {
+        display: flex;
+    }
+
+    .navbar-links a,
+    .navbar-logout {
+        font-size: 1rem !important;
+        width: 100%;
+    }
 }
 
 .filtri {
@@ -177,4 +277,22 @@ td {
 img {
 	width: 60px;
 	height: auto;
+}
+
+/* Allinea il form del logout con gli altri link nella navbar */
+.navbar-links form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+#searchLabel{
+	font-size: 1.5rem;
+	margin-right: 20px;
+}
+
+#q{
+	width: 60%;
+	height: 50px;
 }
