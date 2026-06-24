@@ -5,6 +5,7 @@
     <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico?v=1">
         <meta charset="UTF-8">
         <title>Home</title>
     </head>

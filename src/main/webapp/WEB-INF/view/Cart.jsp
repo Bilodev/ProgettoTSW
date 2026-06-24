@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico?v=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Carrello</title>

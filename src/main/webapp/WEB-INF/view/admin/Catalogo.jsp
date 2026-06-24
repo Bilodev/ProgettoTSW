@@ -7,6 +7,7 @@
 
 <title>Admin Catalogo</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico?v=1">
 </head>
 <body>
 <%
