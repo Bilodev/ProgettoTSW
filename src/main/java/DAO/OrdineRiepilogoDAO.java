@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 
-import control.DataSourceFactory;
+import util.DataSourceFactory;
 import model.OrdineRiepilogo;
 
 public class OrdineRiepilogoDAO {
@@ -30,7 +31,6 @@ public class OrdineRiepilogoDAO {
 	private static final String BASE_GROUP_BY = " GROUP BY o.id, o.seqId, o.data_ordine, u.username, u.email, "
 			+ "i.nome, i.cognome, i.indirizzo, i.citta, i.cap, i.paese ";
 
- 
 	// Ordini di un utente specifico
 	public List<OrdineRiepilogo> findByUtente(int utenteId) throws SQLException {
 		String sql = BASE_SELECT_RIEPILOGO + " WHERE u.id = ? " + BASE_GROUP_BY + " ORDER BY o.data_ordine DESC";

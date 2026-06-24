@@ -44,6 +44,7 @@
                 <th>Durata</th>
                 <th>Regista</th>
                 <th>Prezzo</th>
+                <th>Quantità</th>
                 <th>Azioni</th>
             </tr>
         </thead>
@@ -63,6 +64,7 @@
                 <td><%= current.getDurata() %> min</td>
                 <td><%= current.getRegista() %></td>
                 <td><%= current.getPrezzo() %>€</td>
+                <td><%= current.getQuantita() %></td>
                 <td>
                     <form action="<%= request.getContextPath() %>/admin/catalogo" method="get" style="display:inline;">
                         <input type="hidden" name="action" value="edit" />
@@ -86,8 +88,7 @@
             </tr>
         <%  }
         } else { %>
-            <tr><td colspan="6">Nessun DVD presente.</td></tr>
-            <br>
+            <tr><td colspan="7">Nessun DVD presente.</td></tr>
         <% } %>
         </tbody>
     </table>
@@ -124,6 +125,11 @@
             <label for="prezzo">Prezzo (€):</label>
             <input type="number" id="prezzo" step="0.01" name="prezzo"
                    value="<%= dvd != null ? dvd.getPrezzo() : "" %>" required />
+        </div>
+        <div>
+            <label for="quantita">Quantità:</label>
+            <input type="number" id="quantita" name="quantita" min="0"
+                   value="<%= dvd != null ? dvd.getQuantita() : "0" %>" required />
         </div>
         <div>
             <label for="immagine">Immagine:</label>

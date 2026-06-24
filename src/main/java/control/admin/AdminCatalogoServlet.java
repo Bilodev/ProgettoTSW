@@ -1,4 +1,4 @@
-package control;
+package control.admin;
 
 import DAO.DVDDAO;
 import model.DVD;
@@ -82,6 +82,7 @@ public class AdminCatalogoServlet extends HttpServlet {
                 DVD dvd = buildDVDFromRequest(request);
                 dvd.setId(Integer.parseInt(request.getParameter("id")));
                 dvdDAO.update(dvd);
+                dvdDAO.updateQuantitaAssoluta(dvd.getId(), dvd.getQuantita());
                 // Sovrascrive l'immagine solo se ne è stata caricata una nuova
                 Part imgPart = request.getPart("immagine");
                 if (imgPart != null && imgPart.getSize() > 0) {
@@ -110,7 +111,8 @@ public class AdminCatalogoServlet extends HttpServlet {
         int    durata  = Integer.parseInt(request.getParameter("durata"));
         String regista = request.getParameter("regista");
         float  prezzo  = Float.parseFloat(request.getParameter("prezzo"));
-        return new DVD(0, nome, durata, regista, prezzo, true);
+		int quantita = Integer.parseInt(request.getParameter("quantita"));
+        return new DVD(0, nome, durata, regista, prezzo, true, quantita);
     }
 
     // ------------------------------------------------------ helper: immagine --

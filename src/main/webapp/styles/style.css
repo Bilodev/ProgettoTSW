@@ -7,26 +7,76 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
-  background: #f9fafb;
-  padding: 0;
-  color: #1a1a1a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f2;
+    background-image:
+        radial-gradient(ellipse 60% 40% at 10% 15%, rgba(26,26,26,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 55% at 90% 80%, rgba(26,26,26,0.05) 0%, transparent 65%);
+    padding: 0;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.navbar + * {
-    margin-top: 2rem;
+/* ─── BLOB DECORATIVI (pseudo-elementi sul body) ─── */
+body::before {
+    content: '';
+    position: fixed;
+    top: -120px;
+    left: -140px;
+    width: 480px;
+    height: 420px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #444 100%);
+    border-radius: 60% 40% 55% 45% / 50% 60% 40% 55%;
+    opacity: 0.055;
+    pointer-events: none;
+    z-index: 0;
 }
 
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -100px;
+    right: -120px;
+    width: 400px;
+    height: 360px;
+    background: linear-gradient(315deg, #333 0%, #888 100%);
+    border-radius: 45% 55% 38% 62% / 60% 44% 56% 40%;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ─── TIPOGRAFIA ─── */
 h1 {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 2rem;
+    text-align: center;
+    letter-spacing: -0.02em;
 }
 
+p {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+p a {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1.5px solid #1a1a1a;
+    transition: opacity 0.15s;
+}
+
+p a:hover {
+    opacity: 0.6;
+}
+
+/* ─── FORM ─── */
 form div {
     display: flex;
     flex-direction: column;
@@ -42,67 +92,67 @@ label {
 input {
     padding: 0.6rem 0.85rem;
     border: 1.5px solid #d1d5db;
-    border-radius: 6px;
+    border-radius: 10px;
     font-size: 0.95rem;
     width: 320px;
     outline: none;
-    transition: border-color 0.15s;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus {
-    border-color: #4f6ef7;
+    border-color: #1a1a1a;
+    box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
 }
 
 input::placeholder {
     color: #adb5bd;
 }
 
-button{
+/* ─── BOTTONI ─── */
+button {
     padding: 0.65rem 1.75rem;
-    background: #1a1a1a;
+    background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 0.70rem;
-    font-weight: bold;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.02em;
+}
+
+button:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 button[type="submit"] {
     margin-top: 0.5rem;
     padding: 0.65rem 1.75rem;
-    background: #1a1a1a;
+    background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
     color: #fff;
     border: none;
-    border-radius: 6px;
+    border-radius: 50px;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s;
-    width: auto ;
+    width: auto;
+    transition: opacity 0.15s, transform 0.1s;
 }
 
-button, button[type="submit"]:hover {
-    background: #333;
+button[type="submit"]:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
 }
 
-p {
-    margin-top: 1.5rem;
-    font-size: 0.875rem;
-    color: #6b7280;
-}
-
-p a {
-    color: #4f6ef7;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-p a:hover {
-    text-decoration: underline;
-}
-
+/* ─── FEEDBACK ─── */
 .error {
     color: #c0392b;
     font-size: 0.875rem;
@@ -110,24 +160,38 @@ p a:hover {
 }
 
 .invalid {
-    border: 2px solid red;
+    border: 2px solid #c0392b;
 }
 
-h1 {
-    text-align: center;
-}
-
+/* ─── TABELLA ─── */
 table {
     border-collapse: collapse;
     width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(26,26,26,0.07);
 }
 
-th,
-td {
-    border: 1px solid #ccc;
-    padding: 8px;
+th {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 100%);
+    color: #fff;
+    padding: 10px 12px;
     text-align: left;
-    width: auto;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+td {
+    border: 1px solid #e5e5e5;
+    padding: 10px 12px;
+    text-align: left;
+    background: #fff;
+    font-size: 0.9rem;
+}
+
+tr:hover td {
+    background: #f9f9f7;
 }
 
 .actions {
@@ -135,69 +199,99 @@ td {
     gap: 8px;
 }
 
-
-
+/* ─── NAVBAR ─── */
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #1a1a1a;
+    background: linear-gradient(135deg, #111 0%, #2a2a2a 60%, #1a1a1a 100%);
     color: #fff;
-    padding: 1.6rem 1.5rem;
-    margin-bottom: 24px;
+    padding: 1.2rem 2rem;
+    margin-bottom: 0;
     width: 100%;
     position: sticky;
     top: 0;
     left: 0;
     z-index: 1000;
     box-sizing: border-box;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+
+.navbar + * {
+    margin-top: 2rem;
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #fff;
     white-space: nowrap;
+    letter-spacing: -0.01em;
 }
 
 .navbar-links {
     display: flex;
     align-items: center;
-    gap: 40px;
-    margin-right: 20px;
+    gap: 36px;
+    margin-right: 16px;
 }
 
 .navbar-links a {
-    color: #e0e0e0;
+    color: #d0d0d0;
     text-decoration: none;
     font-size: 0.875rem;
-    font-weight: bolder;
+    font-weight: 600;
     transition: color 0.15s;
+    position: relative;
+}
+
+.navbar-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: #fff;
+    transition: width 0.2s;
 }
 
 .navbar-links a:hover {
     color: #fff;
-    text-decoration: underline;
+}
+
+.navbar-links a:hover::after {
+    width: 100%;
 }
 
 .navbar-logout {
     background: transparent !important;
-    color: #e0e0e0 !important;
+    color: #d0d0d0 !important;
     border: none !important;
     padding: 0 !important;
     font-size: 0.875rem !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     cursor: pointer;
     transition: color 0.15s;
+    border-radius: 0 !important;
+    letter-spacing: 0;
 }
 
 .navbar-logout:hover {
     color: #fff !important;
-    text-decoration: underline;
     background: transparent !important;
+    opacity: 1;
+    transform: none;
 }
 
-/* Hamburger button - nascosto su desktop */
+.navbar-links form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* ─── HAMBURGER ─── */
 .navbar-hamburger {
     display: none;
     background: transparent;
@@ -207,9 +301,110 @@ td {
     cursor: pointer;
     padding: 0;
     line-height: 1;
+    border-radius: 0;
 }
 
-/* Responsive: sotto 800px */
+.navbar-hamburger:hover {
+    opacity: 0.7;
+    transform: none;
+}
+
+/* ─── FILTRI ─── */
+.filtri {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e5e5e5;
+    flex-wrap: wrap;
+    box-shadow: 0 1px 4px rgba(26,26,26,0.05);
+}
+
+.filtri label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+/* ─── TABS ─── */
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: #ececea;
+    padding: 5px;
+    border-radius: 50px;
+    width: fit-content;
+}
+
+.tabs button {
+    background: transparent;
+    color: #555;
+    border-radius: 50px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+    transform: none;
+}
+
+.tabs button:hover,
+.tabs button.active {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    color: #fff;
+    opacity: 1;
+    transform: none;
+}
+
+/* ─── IMMAGINI ─── */
+img {
+    width: 60px;
+    height: auto;
+    border-radius: 6px;
+}
+
+/* ─── QTBUTTON ─── */
+.qtbutton {
+    margin-top: -2px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.82rem;
+    width: auto;
+    height: auto;
+    line-height: 1;
+    border-radius: 50px;
+}
+
+/* ─── SEARCH ─── */
+#searchLabel {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-right: 16px;
+    letter-spacing: -0.01em;
+}
+
+#q {
+    width: 60%;
+    height: 50px;
+    border-radius: 50px;
+    padding-left: 1.2rem;
+    font-size: 1rem;
+    border: 1.5px solid #d1d5db;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#q:focus {
+    border-color: #1a1a1a;
+    box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+}
+
+/* ─── RESPONSIVE ─── */
 @media (max-width: 800px) {
     .navbar {
         flex-wrap: wrap;
@@ -224,7 +419,7 @@ td {
         display: none;
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 14px;
         width: 100%;
         margin-top: 0.75rem;
         padding-top: 0.75rem;
@@ -240,59 +435,8 @@ td {
         font-size: 1rem !important;
         width: 100%;
     }
-}
 
-.filtri {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;   /* allinea tutto alla baseline bassa */
-    gap: 16px;
-    margin-bottom: 20px;
-    padding: 12px;
-    background: #fafafa;
-    flex-wrap: wrap;         /* va a capo su schermi stretti */
-}
-
-.filtri label {
-    display: block;
-    font-size: 12px;
-    margin-bottom: 4px;
-}
-
-.tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.qtbutton {
-    margin-top: -2px;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.85rem;
-    width: auto;
-    height: auto;
-    line-height: 1;
-}
-
-img {
-	width: 60px;
-	height: auto;
-}
-
-/* Allinea il form del logout con gli altri link nella navbar */
-.navbar-links form {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
-
-#searchLabel{
-	font-size: 1.5rem;
-	margin-right: 20px;
-}
-
-#q{
-	width: 60%;
-	height: 50px;
+    #q {
+        width: 100%;
+    }
 }

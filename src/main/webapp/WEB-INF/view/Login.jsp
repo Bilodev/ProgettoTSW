@@ -6,7 +6,7 @@
 <title>Login</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
 </head>
-<body>
+<body><br> <br>
 <h1>Login</h1>
 <% if (request.getAttribute("error") != null) { %>
     <p class="error"><%= request.getAttribute("error") %></p>
@@ -25,6 +25,9 @@
     </center>
 </form>
 <p>Non hai un account? <a href="<%= request.getContextPath() %>/signup">Registrati</a></p>
+<br>
+<p><a href="<%= request.getContextPath() %>/home">Torna alla home</a></p>
+
 <script src="${pageContext.request.contextPath}/scripts/login.js"></script>
 </body>
 </html>

@@ -73,7 +73,7 @@ public class Checkout extends HttpServlet {
                     OrdineDVD riga = new OrdineDVD();
                     riga.setOrdineId(ordineId);
                     riga.setDvdId(dvd.getId());
-                    riga.setQuantita(dvd.getQuantity());
+                    riga.setQuantita(dvd.getQuantitaSelezionata());
                     riga.setPrezzoUnitario((float) dvd.getPrezzo());
                     // NOTA: Se il tuo model OrdineDVD usa il costruttore a 4 parametri visto nel DAO:
                     // OrdineDVD riga = new OrdineDVD(ordineId, dvd.getId(), dvd.getQuantity(), (float) dvd.getPrezzo());

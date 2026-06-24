@@ -1,4 +1,4 @@
-package control;
+package control.api;
 
 import DAO.DVDDAO;
 import model.DVD;
@@ -30,7 +30,7 @@ public class SearchAPI extends HttpServlet {
             StringBuilder json = new StringBuilder("[");
             List<DVD> results = query != null && !query.isBlank() ? dvdDAO.searchByName(query) : List.of();
             if (query == null || query.isBlank()) {
-            	results = dvdDAO.findAll();
+            	results = dvdDAO.findAllInCatalogo();
             }
             for (int i = 0; i < results.size(); i++) {
                 DVD dvd = results.get(i);
@@ -40,7 +40,8 @@ public class SearchAPI extends HttpServlet {
                 json.append("\"nome\":\"" ).append(escapeJson(dvd.getNome())).append("\",");
                 json.append("\"durata\":").append(dvd.getDurata()).append(",");
                 json.append("\"regista\":\"" ).append(escapeJson(dvd.getRegista())).append("\",");
-                json.append("\"prezzo\":\"" ).append(dvd.getPrezzo()).append("\"");                
+                json.append("\"prezzo\":\"" ).append(dvd.getPrezzo()).append("\",");
+                json.append("\"qt\":\"" ).append(dvd.getQuantita()).append("\"");                
                 json.append("}");
             }
             json.append("]");

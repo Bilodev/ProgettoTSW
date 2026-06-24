@@ -55,7 +55,7 @@
 <form method="get" action="<%= request.getContextPath() %>/admin/ordini">
     <input type="hidden" name="vista" value="<%= vista != null ? vista : "ordini" %>">
     <div class="filtri">
-        <div>
+        <div> 
             <label>Data inizio</label>
             <input type="date" name="dataInizio" value="<%= dataInizio %>">
         </div>

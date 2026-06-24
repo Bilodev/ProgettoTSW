@@ -1,4 +1,4 @@
-package control;
+package control.admin;
 
 import DAO.OrdineRiepilogoDAO;
 import model.OrdineRiepilogo;
@@ -41,6 +41,7 @@ public class AdminOrdiniServlet extends HttpServlet {
                 List<OrdineRiepilogo> clienti = ordineRiepilogoDAO.findTotaliPerCliente(dataInizio, dataFine);
                 request.setAttribute("clienti", clienti);
 
+            // vista degli ordini in base a se è presente o meno parametro utente
             } else if (utenteIdStr != null && !utenteIdStr.isEmpty()) {
                 List<OrdineRiepilogo> ordini = ordineRiepilogoDAO.findByUtenteAndDateRange(utenteIdStr, dataInizio, dataFine);
                 request.setAttribute("ordini", ordini);

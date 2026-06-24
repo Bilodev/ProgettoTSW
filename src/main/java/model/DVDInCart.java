@@ -1,18 +1,18 @@
 package model;
 
 public class DVDInCart extends DVD{
-	private int quantity;
+	private int quantitaSelezionata;
 	
-	  public DVDInCart(int id, String nome, int durata, String regista, float prezzo, boolean inCatalogo, int quantity) {
-	        super(id, nome, durata, regista, prezzo, inCatalogo);
-	        this.quantity = quantity;
+	  public DVDInCart(int id, String nome, int durata, String regista, float prezzo, boolean inCatalogo, int quantita, int quantitaSelezionata) {
+	        super(id, nome, durata, regista, prezzo, inCatalogo, quantita);
+	        this.quantitaSelezionata = quantitaSelezionata;
 	    }
 	
-	public void setQuantity(int q) {
-		quantity = q;
+	public void setQuantitaSelezionata(int q) {
+		quantitaSelezionata = q;
 	}
 	
-	public int getQuantity() {
-		return quantity;
+	public int getQuantitaSelezionata() {
+		return quantitaSelezionata;
 	}
 }

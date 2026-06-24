@@ -27,7 +27,7 @@
         <span class="navbar-brand">Carrello</span>
         <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
         <div class="navbar-links" id="navbarLinks">
-            <a href="<%= request.getContextPath() %>/cart">Home</a>
+            <a href="<%= request.getContextPath() %>/home">Home</a>
             <% if (isAdmin) { %>
                 <a href="<%= request.getContextPath() %>/admin/catalogo">Gestione Catalogo</a>
                 <a href="<%= request.getContextPath() %>/admin/ordini">Gestisci ordini</a>
@@ -69,9 +69,11 @@
                 <td><%= cartList.get(i).getRegista() %></td>
                 <td><%= cartList.get(i).getPrezzo() %>€</td>
 				<td>
-					<%= cartList.get(i).getQuantity() %> 
-					<button class="qtbutton" onclick="updateCart(<%= cartList.get(i).getId() %>, 1 )">+</button> 
-					<% if (cartList.get(i).getQuantity() >= 2){ %>
+					<%=cartList.get(i).getQuantitaSelezionata()%> 
+					<button class="qtbutton" onclick="updateCart(<%=cartList.get(i).getId()%>, 1 )">+</button> 
+					<%
+ 					if (cartList.get(i).getQuantitaSelezionata() >= 2){
+ 					%>
 						<button class="qtbutton" onclick="updateCart(<%= cartList.get(i).getId() %>, -1 )">-</button> 
 					<% } %>
 				</td>
@@ -90,7 +92,7 @@
 	<% 
 	  float sum = 0;
 	  for (int i = 0; i < cartList.size(); i++)
-	      sum += cartList.get(i).getPrezzo() * cartList.get(i).getQuantity();
+	      sum += cartList.get(i).getPrezzo() * cartList.get(i).getQuantitaSelezionata();
 	  DecimalFormat df = new DecimalFormat("#.##");
 	  df.setRoundingMode(RoundingMode.CEILING);
 	%>

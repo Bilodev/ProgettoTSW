@@ -7,17 +7,19 @@ public class DVD {
     private String regista;
     private boolean inCatalogo;
     private float prezzo;
+    private int quantita;
     
     public DVD() {
     }
 
-    public DVD(int id, String nome, int durata, String regista, float prezzo, boolean inCatalogo) {
+    public DVD(int id, String nome, int durata, String regista, float prezzo, boolean inCatalogo, int quantita) {
         this.id = id;
         this.nome = nome;
         this.durata = durata;
         this.regista = regista;
         this.prezzo = prezzo;
         this.inCatalogo = inCatalogo;
+        this.quantita = quantita;
     }
 
     public int getId() {
@@ -64,5 +66,11 @@ public class DVD {
     }
     public void setPrezzo(float p) {
     	prezzo = p;
+    }
+    public int getQuantita() {
+    	return quantita;
+    }
+    public void setQuantita(int q) {
+    	this.quantita = q;
     }
 }

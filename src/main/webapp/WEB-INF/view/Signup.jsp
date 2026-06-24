@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
 </head>
 <body>
-<h1>Registrazione</h1>
+<br> <br>
+
+<h1>Sign Up</h1>
 <% if (request.getAttribute("error") != null) { %>
     <p class="error"><%= request.getAttribute("error") %></p>
 <% } %>
@@ -31,8 +33,12 @@
     <center>
     <button type="submit">Registrati</button>
     </center>
+    
 </form>
 <p>Hai già un account? <a href="<%= request.getContextPath() %>/login">Login</a></p>
+<br>
+<p><a href="<%= request.getContextPath() %>/home">Torna alla home</a></p>
+
 <script src="${pageContext.request.contextPath}/scripts/signup.js"></script>
 </body>
 </html>
