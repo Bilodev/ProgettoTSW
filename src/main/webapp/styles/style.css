@@ -6,6 +6,14 @@
     padding: 0;
 }
 
+/* Sincronizza il contenitore AJAX con il comportamento del body */
+#resultsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background: #f4f4f2;
@@ -166,10 +174,11 @@ button[type="submit"]:hover {
 /* ─── TABELLA ─── */
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 60%;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(26,26,26,0.07);
+    margin-top: 20px;
 }
 
 th {
@@ -405,7 +414,7 @@ img {
 }
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .navbar {
         flex-wrap: wrap;
         padding: 0.75rem 1rem;
@@ -438,5 +447,20 @@ img {
 
     #q {
         width: 100%;
+    }
+
+    /* ─── FIX TABELLA SOLO CSS ─── */
+    table {
+        display: block;       /* Trasforma la tabella in un blocco */
+        overflow-x: auto;     /* Permette lo scroll orizzontale */
+        width: 80% !important;
+        white-space: nowrap;  /* Evita che i testi vadano a capo in modo strano */
+    }
+    
+    /* Ottimizzazione per il bottone: su mobile è gigante, rimpiccioliamolo! */
+    td button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+        white-space: normal; /* Permette al testo del bottone di andare a capo se serve */
     }
 }

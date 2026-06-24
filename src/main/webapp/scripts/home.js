@@ -8,21 +8,41 @@ function eseguiRicerca(query) {
             if (data.length === 0) {
                 resultsContainer.innerHTML = '<p>Nessun DVD trovato.</p>';
             } else {
-                let html = '<table><thead><tr><th>Copertina</th><th>Nome</th><th>Durata</th><th>Regista</th><th>Prezzo</th><th>Disponibilità</th><th>Azioni</th></tr></thead><tbody>';
-                data.forEach(dvd => {
-                    html += '<tr data-id="' + dvd.id + '">';
-                    html += '<td><img src="static/' + dvd.id + '.jpg"/></td>';
-                    html += '<td>' + dvd.nome + '</td>';
-                    html += '<td>' + dvd.durata + ' min</td>';
-                    html += '<td>' + dvd.regista + '</td>';
-                    html += '<td>' + dvd.prezzo + '\u20ac</td>';
-                    html += '<td class="qt-cell">' + (dvd.qt > 0 ? dvd.qt : '<span style="color:red;">Esaurito</span>') + '</td>';
-                    html += '<td><button class="btn-add" onclick="addToCart(' + dvd.id + ', \'' + dvd.nome.replace(/'/g, "\\'") + '\', ' + dvd.durata + ', \'' + dvd.regista.replace(/'/g, "\\'") + '\', ' + dvd.prezzo + ')"'
-                          + (dvd.qt <= 0 ? ' disabled' : '') + '>Aggiungi al carrello</button></td>';
-                    html += '</tr>';
-                });
-                html += '</tbody></table>';
-                resultsContainer.innerHTML = html;
+let html = '<table>';
+html += '<thead>';
+html += '<tr>';
+html += '<th>Copertina</th>';
+html += '<th>Nome</th>';
+html += '<th>Durata</th>';
+html += '<th>Regista</th>';
+html += '<th>Prezzo</th>';
+html += '<th>Disponibilità</th>';
+html += '<th>Azioni</th>';
+html += '</tr>';
+html += '</thead>';
+html += '<tbody>';
+
+data.forEach(dvd => {
+    html += '<tr data-id="' + dvd.id + '">';
+    
+    // 2. Aggiungiamo l'attributo width protettivo all'immagine, come nel JSP
+    html += '<td><img src="static/' + dvd.id + '.jpg"/></td>';
+    
+    html += '<td>' + dvd.nome + '</td>';
+    html += '<td>' + dvd.durata + ' min</td>';
+    html += '<td>' + dvd.regista + '</td>';
+    html += '<td>' + dvd.prezzo + '€</td>';
+    html += '<td class="qt-cell">' + (dvd.qt > 0 ? dvd.qt : '<span style="color:red;">Esaurito</span>') + '</td>';
+    
+    // 3. Ripristiniamo la classe corretta sul bottone (btn-addHome) per agganciare il CSS
+    html += '<td><button class="btn-addHome" onclick="addToCart(' + dvd.id + ', \'' + dvd.nome.replace(/'/g, "\\'") + '\', ' + dvd.durata + ', \'' + dvd.regista.replace(/'/g, "\\'") + '\', ' + dvd.prezzo + ')"'
+          + (dvd.qt <= 0 ? ' disabled' : '') + '>Aggiungi al carrello</button></td>';
+          
+    html += '</tr>';
+});
+
+html += '</tbody></table>';
+resultsContainer.innerHTML = html;
             }
         })
         .catch(error => {

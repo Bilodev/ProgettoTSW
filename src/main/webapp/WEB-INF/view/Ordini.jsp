@@ -10,6 +10,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>I miei ordini</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
 </head>
@@ -27,7 +29,7 @@
             <a href="<%= request.getContextPath() %>/logout">Logout</a>
         </div>
 </div>
-
+	<br> <br> <br>
 <% if (ordini == null || ordini.isEmpty()) { %>
     <p>Non hai ancora effettuato nessun ordine.</p>
 <% } else { %>
