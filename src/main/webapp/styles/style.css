@@ -457,7 +457,6 @@ img {
         white-space: nowrap;  /* Evita che i testi vadano a capo in modo strano */
     }
     
-    /* Ottimizzazione per il bottone: su mobile è gigante, rimpiccioliamolo! */
     td button {
         padding: 0.4rem 0.8rem;
         font-size: 0.75rem;
